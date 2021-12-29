@@ -1,21 +1,22 @@
-#include <LiquidCrystal.h>
+//Receiver:
 
-// initialize the library by associating any needed LCD interface pin
-// with the arduino pin number it is connected to
-const int rs = 11, en = 10, d4 = 9, d5 = 8, d6 = 7, d7 = 6;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+//Referance: https://www.youtube.com/watch?v=I2qFXSe0W3w&list=LL&index=1
 
-void setup() {
-  // set up the LCD's number of columns and rows:
-  lcd.begin(16, 2);
-  // Print a message to the LCD.
-  lcd.print("hello, world!");
+#include <SoftwareSerial.h>
+#define tx 2
+#define rx 3
+SoftwareSerial bt(rx, tx); //RX, TX
+void setup()
+{
+  Serial.begin(9600);
+  bt.begin(9600);
+  pinMode(tx, OUTPUT);
+  pinMode(rx, INPUT);
 }
-
-void loop() {
-  // set the cursor to column 0, line 1
-  // (note: line 1 is the second row, since counting begins with 0):
-  lcd.setCursor(0, 1);
-  // print the number of seconds since reset:
-  lcd.print(millis() / 1000);
+void loop()
+{
+  if (bt.available() > 0)
+  {
+    Serial.println(bt.read());
+  }
 }
